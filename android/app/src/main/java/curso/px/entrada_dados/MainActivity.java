@@ -1,4 +1,4 @@
-package curso.px.entrada_dados;
+package curso.px.alcool_gasolina;
 
 import io.flutter.embedding.android.FlutterActivity;
 

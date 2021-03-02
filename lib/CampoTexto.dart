@@ -11,6 +11,38 @@ class _CampoTextoState extends State<CampoTexto> {
   TextEditingController _controllerAlcool = TextEditingController();
   TextEditingController _controllerGasolina = TextEditingController();
 
+  var _resultado = '';
+
+  void _calcularPreco(){
+    
+    double precoAlcool = double.tryParse(_controllerAlcool.text);
+    double precoGasolina = double.tryParse(_controllerGasolina.text);
+
+    if(precoAlcool == null || precoGasolina == null){
+      setState(() {
+        this._resultado = 'Preço inválido! O preço deve ser maior que "0" e ser digitado utilizando o "."!';      
+      });
+    }
+
+    if((precoAlcool / precoGasolina) >= 0.7){
+      setState(() {
+        this._resultado = 'É melhor abastecer com gasolina!';      
+      });
+    } else {
+      setState(() {
+        this._resultado = 'É melhor abastecer com álcool!';      
+      });
+    }
+
+    //_limparCampos();
+
+  }
+
+  /*void _limparCampos(){
+    _controllerGasolina.text = '';
+    _controllerAlcool.text = '';
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +87,7 @@ class _CampoTextoState extends State<CampoTexto> {
                     focusColor: Colors.blue
                   ),
                   onSubmitted: (String valorAlcool){
-
+                    
                   },
                   controller: _controllerAlcool,
                 ),
@@ -94,15 +126,13 @@ class _CampoTextoState extends State<CampoTexto> {
                       color: Colors.white,
                     )
                   ),
-                  onPressed: (){
-                    
-                  },
+                  onPressed: _calcularPreco,
                 )
               ),
 
               Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Text('Resultado',
+                padding: EdgeInsets.fromLTRB(32, 20, 20, 20),
+                child: Text(_resultado,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600
